@@ -15,20 +15,19 @@ dbListTables(mydb)
 
 #This is a variable that holds an SQL command to insert the kat variable into the database. The id is NULL,
 #because, the database is configured ina way to give ids to new data inserted
-sql = sprintf("INSERT INTO `recipes`.`ingredients` (`id`, `name`) VALUES (NULL, '%s');", kat)
+#sql = sprintf("INSERT INTO `recipes`.`ingredients` (`id`, `name`) VALUES (NULL, '%s');", kat)
 
 #This is another variable that holds a command to grab all info in the table labeled "ingredients" 
 #uncomment to use this command instead.
-#rs = dbSendQuery(mydb, "SELECT * FROM ingredients order by id ASC;")
+rs = dbSendQuery(mydb, "SELECT * FROM ingredients where name = \"olivarez\" order by id ASC;")
 
 #Here is the next example of a variable that represents sending a command to the database. mydb is the 
 #database connection from earlier sql is the insert sql command from earlier
-rs = dbSendQuery(mydb, sql)
+#rs = dbSendQuery(mydb, sql)
 
 #This variable stores the data from rs, the command used on the specified database. n=20 is simply how many rows
 #from the table you wish to grab
 data = fetch(rs, n = 20)
-
 #This clears the query that was stored in rs so you can use rs for another command
 dbClearResult(rs)
 
