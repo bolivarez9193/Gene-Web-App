@@ -62,21 +62,31 @@ server <- function(input, output)
                          dbname='genomeusers', 
                          host='localhost')
         on.exit(dbDisconnect(mydb))
-        if(input$comp == ""){
-        sql = sprintf("INSERT INTO `genomeusers`.`users` (`id`, `First Name`, `Last Name`, `Organization`, `Email`, `Key`) VALUES (NULL, '%s', '%s', 'empty', '%s','%s');", 
-                      input$fname, input$lname, input$email, input$key)
+        checking = sprintf("SELECT * FROM `users` WHERE Email = \"%s\";", input$email)
+        rs = dbSendQuery(mydb, checking)
+        data = fetch(rs, n = 20)
+        dbClearResult(rs)
+       
+        if(nrow(data) == 0){
+          output$error = renderText("")
+          if(input$comp == ""){
+            sql = sprintf("INSERT INTO `genomeusers`.`users` (`id`, `First Name`, `Last Name`, `Organization`, `Email`, `Key`) VALUES (NULL, '%s', '%s', 'empty', '%s','%s');", 
+                          input$fname, input$lname, input$email, input$key)
+          }
+          else{
+            sql = sprintf("INSERT INTO `genomeusers`.`users` (`id`, `First Name`, `Last Name`, `Organization`, `Email`, `Key`) VALUES (NULL, '%s', '%s', '%s', '%s','%s');", 
+                          input$fname, input$lname, input$comp, input$email, input$key)
+          }
+          rs = dbSendQuery(mydb, sql)
+          dbClearResult(rs)
         }
         else{
-          sql = sprintf("INSERT INTO `genomeusers`.`users` (`id`, `First Name`, `Last Name`, `Organization`, `Email`, `Key`) VALUES (NULL, '%s', '%s', '%s', '%s','%s');", 
-                        input$fname, input$lname, input$comp, input$email, input$key)
+          output$error = renderText("That email is already taken, please try another one.")
         }
-        rs = dbSendQuery(mydb, sql)
-        dbClearResult(rs)
        
       }
       else{
         output$error = renderText("Must enter characters in required textboxes.")
-        runApp('GUI Code/home')
       }
     })
   })
