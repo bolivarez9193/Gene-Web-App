@@ -19,16 +19,24 @@ ui <- fluidPage(
                   textInput("key", "Password:", ""),
                   a("Forgot Password", href="", target="_blank"),
                   "|",
-                  a("Create Account", href="C:/Users/bolivarez9193/Documents/GUI code/newAccount", target="_blank"),
+                  #a("Create Account", href="C:/Users/bolivarez9193/Documents/GUI code/newAccount", target="_blank"),
                   
-                  #a("Create Account", href="https://hbrown.shinyapps.io/newAccount", target="_blank"),
-                  submitButton(text = "Submit", icon = NULL, width = NULL))
+                  a("Create Account", href="https://hbrown.shinyapps.io/newAccount", target="_blank"),
+                  actionButton("doThis", label = "Submit",
+                               style = "color: #fff; background-color: #337ab7; border-color: #2e6da4")
+                )
   ),
   absolutePanel(left = "0%", bottom = "0%", top = "92%", width = "100%", align = "center", 
                 wellPanel("Copyright 2015"))
 )
 server <- function(input, output)
 {
- 
+  observe({
+    if(input$doThis==0) return()
+    
+    isolate({
+      runApp("C:/Users/bolivarez9193/Documents/GUI_Code/main")
+    })
+  })
 }
 shinyApp(ui, server = server)

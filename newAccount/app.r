@@ -40,6 +40,9 @@ ui <- fluidPage(
     )
   )
 )
+
+
+
 server <- function(input, output)
 {
   output$image <- renderImage({
@@ -50,6 +53,7 @@ server <- function(input, output)
       alt = "dna_helix"))
     
   },deleteFile = FALSE)
+  
   
   observe({
     if(input$doThis==0) return()

@@ -1090,7 +1090,7 @@ body {
   font-size: 15px;
   line-height: 1.42857143;
   color: #ebebeb;
-  background-image: url("dna-helix.jpg");
+  background-color: #444444;
   background-size: 100%;
 }
 input,
@@ -2552,6 +2552,18 @@ output {
   font-size: 15px;
   line-height: 1.42857143;
   color: #2b3e50;
+}
+
+.login{
+  line-height: 1.42857143;
+  color: #ebebeb;
+  background-image: url(dna-helix2.jpg);
+  background-size: 100%;
+
+}
+
+.logText{
+	color: #444444;
 }
 .form-control {
   display: block;
